@@ -1,15 +1,19 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import Header from "./Header";
 import Scene from "./Scene";
 import BlendingColors from "./Shaders/BlendingColors";
 
 function App() {
   return (
-    <div className="App">
-      <Scene />
-      <BlendingColors />
-    </div>
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route path="/" exact element={<Scene />} />
+        <Route path="/blending-colors" element={<BlendingColors />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

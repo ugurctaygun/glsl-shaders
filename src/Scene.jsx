@@ -24,6 +24,10 @@ function Scene() {
 
   useEffect(() => {
     document.body.appendChild(renderer.domElement);
+
+    return () => {
+      document.body.removeChild(renderer.domElement);
+    };
   }, []);
 
   // animation

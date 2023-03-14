@@ -64,13 +64,26 @@ nav {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgb(89 77 77 / 10%);
+  background-color: rgb(89 77 77 / 60%);
   height: 100%;
 }
 
 nav ul {
   padding: 25px 70px 25px 25px;
   list-style: none;
+}
+
+.shader-code {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  color: white;
+  max-width: 450px;
+}
+
+.shader {
+  margin: 50px;
 }
 
 @media (prefers-color-scheme: light) {

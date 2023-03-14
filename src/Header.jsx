@@ -11,6 +11,9 @@ const Header = () => {
           <li>
             <Link to="/blending-colors">Blending Colors</Link>
           </li>
+          <li>
+            <Link to="/flame">Flames</Link>
+          </li>
         </ul>
       </nav>
     </>

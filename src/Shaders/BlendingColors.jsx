@@ -97,6 +97,18 @@ function BlendingColors() {
     uniforms.u_time.value += clock.getDelta();
     renderer.render(scene, camera);
   }
+
+  return (
+    <div className="shader-code">
+      <div className="shader">
+        Vertex Shader:
+        <br />
+        {vshader} <br /> <br />
+        Fragment Shader:
+        <br /> {fshader}{" "}
+      </div>
+    </div>
+  );
 }
 
 export default BlendingColors;

@@ -14,9 +14,10 @@ function Flame() {
 
   const flameShader = {
     uniforms: {
-      time: { value: 0 }, // time uniform for animation
-      distortion: { value: 2.0 }, // distortion uniform for adjusting flame shape
-      noiseTexture: { value: null }, // new uniform for the noise texture
+      time: { value: 0 },
+      distortion: { value: 2.0 },
+      noiseTexture: { value: null },
+      flameTexture: { value: null }, // define the flame texture uniform
     },
     vertexShader: `
       varying vec2 vUv;
@@ -29,8 +30,9 @@ function Flame() {
       varying vec2 vUv;
       uniform float time;
       uniform float distortion;
-      uniform sampler2D noiseTexture; // define the noise texture uniform
-    
+      uniform sampler2D noiseTexture;
+      uniform sampler2D flameTexture;
+      
       void main() {
         vec3 yellow = vec3(1.0, 0.9, 0.1);
         vec3 orange = vec3(1.0, 0.5, 0.1);
@@ -39,10 +41,9 @@ function Flame() {
         float flameShape = sin(vUv.y * 10.0 + time) * distortion;
         flameShape += (texture2D( noiseTexture, vUv * 10.0 + time * 0.5 ).r - 0.5) * 0.3;
   
-        vec3 color = mix(yellow, orange, vUv.y);
-        color = mix(color, red, max(0.0, vUv.y - 0.8) * 5.0);
+        vec4 flameColor = texture2D(flameTexture, vUv);
   
-        gl_FragColor = vec4(color * flameShape, 1.0);
+        gl_FragColor = vec4(flameColor.rgb * flameShape, flameColor.a);
       }
     `,
   };
@@ -52,6 +53,11 @@ function Flame() {
   );
   noiseTexture.wrapS = THREE.RepeatWrapping;
   noiseTexture.wrapT = THREE.RepeatWrapping;
+
+  const textureLoader = new THREE.TextureLoader();
+  const flameTexture = textureLoader.load(
+    "https://threejsfundamentals.org/threejs/resources/images/wall.jpg"
+  );
 
   const material = new THREE.ShaderMaterial({
     uniforms: flameShader.uniforms,
@@ -63,22 +69,18 @@ function Flame() {
     blending: THREE.AdditiveBlending,
   });
 
-  material.uniforms.noise = { value: noiseTexture };
+  material.uniforms.noiseTexture = { value: noiseTexture };
+  material.uniforms.flameTexture = { value: flameTexture };
 
-  const geometry = new THREE.SphereGeometry(0.2, 0.2, 0.2);
+  const geometry = new THREE.PlaneGeometry(1, 1);
 
   const mesh = new THREE.Mesh(geometry, material);
+  mesh.rotation.x = 3;
   scene.add(mesh);
-  mesh.rotation.y = 200;
-  mesh.rotation.x = -100;
-
-  const geometry2 = new THREE.SphereGeometry(15, 32, 16);
-  const material2 = new THREE.MeshBasicMaterial({ color: 0xababab });
-  const sphere = new THREE.Mesh(geometry2, material2);
-  scene.add(sphere);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0xffffff, 1);
   renderer.setAnimationLoop(animation);
 
   useEffect(() => {

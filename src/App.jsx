@@ -5,6 +5,7 @@ import Header from "./Header";
 import Scene from "./Scene";
 import BlendingColors from "./Shaders/BlendingColors";
 import Flame from "./Shaders/Flame";
+import Shapes from "./Shaders/Shapes";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <Routes>
         <Route path="/" exact element={<Scene />} />
         <Route path="/blending-colors" element={<BlendingColors />} />
-        <Route path="/flame" element={<Flame />} />
+        <Route path="/shapes" element={<Shapes />} />
       </Routes>
     </BrowserRouter>
   );

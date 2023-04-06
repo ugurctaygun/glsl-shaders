@@ -2,16 +2,16 @@ import { useEffect } from "react";
 import * as THREE from "three";
 
 const vshader = `
-varying vec3 v_position;
+varying vec2 v_uv;
 
 void main() {	
-  v_position = position;
+  v_uv = uv;
   gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 }
 `;
 const fshader = `
 uniform float u_time;
-varying vec3 v_position;
+varying vec2 v_uv;
 
 mat2 getRotationMatrix(float theta) {
   float s = sin(theta);
@@ -19,9 +19,6 @@ mat2 getRotationMatrix(float theta) {
   return mat2(c,-s,s,c);
 }
 
-mat2 getScaleMatrix(float scale){
-  return mat2(scale,0,0,scale);
-}
 
 float rect(vec2 pt , vec2 size , vec2 center ) {
     vec2 p = pt - center;
@@ -34,24 +31,18 @@ float rect(vec2 pt , vec2 size , vec2 center ) {
 
 void main (void)
 {
-  vec2 center = vec2(0.0);
-  mat2 matr = getRotationMatrix(u_time);
-  mat2 mats = getScaleMatrix((sin(u_time)+1.0)/3.0 + 0.5);
-  vec2 pt = matr * v_position.xy;
-  pt = mats * matr * pt;
-  pt += center;
+    float tilecount = 4.0;
+  vec2 center = vec2(0.5);
+  mat2 mat = getRotationMatrix(u_time);
+  vec2 p = fract(v_uv * tilecount);
+  vec2 pt = (mat * (p-center)) + center;
   float inRect = rect(pt , vec2(0.3) , center);
-  float inCircle = 1.0 - step(0.4, length(v_position.xy));
-  vec3 color = vec3(1.0,1.0,0.0) * inRect + vec3(0.3,0.3,0.5) * inCircle;
+  vec3 color = vec3(1.0,1.0,0.0) * inRect;
   gl_FragColor = vec4(color,1.0);
 }
 `;
 
-//SEPERATE COLORS MULTIPLE RECTANGLES
-//float inRect2 = rect(v_position.xy , vec2(0.4) , vec2(-0.4 , 0.5));
-//vec3 color = vec3(1.0,1.0,0.0) * inRect + vec3(0.5,0.5,0.0) * inRect2;
-
-function Shapes() {
+function Tiling() {
   const scene = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
 
@@ -105,4 +96,4 @@ function Shapes() {
   );
 }
 
-export default Shapes;
+export default Tiling;

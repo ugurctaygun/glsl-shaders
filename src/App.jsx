@@ -6,6 +6,7 @@ import Scene from "./Scene";
 import BlendingColors from "./Shaders/BlendingColors";
 import Flame from "./Shaders/Flame";
 import Shapes from "./Shaders/Shapes";
+import Tiling from "./Shaders/Tiling";
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
       <Routes>
         <Route path="/" exact element={<Scene />} />
         <Route path="/blending-colors" element={<BlendingColors />} />
+        <Route path="/lines" element={<Shapes />} />
         <Route path="/shapes" element={<Shapes />} />
+        <Route path="/tiling" element={<Tiling />} />
       </Routes>
     </BrowserRouter>
   );

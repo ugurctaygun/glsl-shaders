@@ -77,8 +77,9 @@ nav ul {
   position: absolute;
   top: 0;
   right: 0;
-  background-color: transparent;
-  color: white;
+  background-color: rgb(255 255 255 / 50%);
+  color: black;
+  font-weight: bold;
   max-width: 450px;
 }
 

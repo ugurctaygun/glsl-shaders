@@ -12,10 +12,13 @@ const Header = () => {
             <Link to="/blending-colors">Blending Colors</Link>
           </li>
           <li>
-            <Link to="/flame">Flames</Link>
+            <Link to="/lines">Drawing Lines</Link>
           </li>
           <li>
-            <Link to="/shapes">Shapes</Link>
+            <Link to="/shapes">Drawing Shapes</Link>
+          </li>
+          <li>
+            <Link to="/tiling">Tiling</Link>
           </li>
         </ul>
       </nav>

@@ -15,7 +15,7 @@ const Header = () => {
             <Link to="/lines">Drawing Lines</Link>
           </li>
           <li>
-            <Link to="/shapes">Drawing Shapes</Link>
+            <Link to="/shapes">Custom Animations</Link>
           </li>
           <li>
             <Link to="/tiling">Tiling</Link>
